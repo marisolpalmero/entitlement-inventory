@@ -1,6 +1,6 @@
 # A YANG Module for Entitlement Inventory
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "A YANG Module for Entitlement Inventory".
 
 * [Editor's Copy](https://dr2lopez.github.io/entitlement-inventory/#go.draft-mcd-ivy-entitlement-inventory.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-mcd-ivy-entitlement-inventory)
