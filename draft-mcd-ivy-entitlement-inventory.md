@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: ""
+workgroup: "Network Inventory YANG"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Network Inventory YANG"
+  type: ""
+  mail: "inventory-yang@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/inventory-yang/"
+  github: "dr2lopez/entitlement-inventory"
+  latest: "https://dr2lopez.github.io/entitlement-inventory/draft-mcd-ivy-entitlement-inventory.html"
 
 author:
  -
