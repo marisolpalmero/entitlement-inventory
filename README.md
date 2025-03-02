@@ -1,4 +1,4 @@
-# TODO - Your title
+# A YANG Module for Entitlement Inventory
 
 This is the working area for the individual Internet-Draft, "TODO - Your title".
 
