@@ -111,12 +111,12 @@ Capabilities are modeled by augmenting "newtwork-element" in the "ietf-network-i
          +--rw resource-amount?                  int32
          +--rw supporting-entitlements
             +--rw entitlement* [entitlement-id]
-            +--rw entitlement-id                 -> ../entitlements/entitlment/entitlement-id
+            +--rw entitlement-id                 -> ../../../../../entitlements/entitlment/entitlement-id
             +--rw allowed?                       boolean
             +--rw in-use?                        boolean
             +--rw capability-restriction* [capability-restriction-id]
                +--rw capability-restriction-id   string
-               +--rw component-id?               -> ../components/component/component-id
+               +--rw component-id?               -> ../../../../../components/component/component-id
                +--rw description?                string
                +--rw resource-name?              string
                +--rw units?                      string
@@ -148,7 +148,7 @@ As in the case of capabilities, entitlement modeling augments "newtwork-element"
    |  +--rw units?                            string
    |  +--rw max-value?                        int32
    |  +--rw current-value?                    int32
-   +--rw parent-entitlement-uid?     -> ../../entitlement/uid
+   +--rw parent-entitlement-uid?              -> ../entitlement/eid
    +--rw entitlement-attachment
       +--rw universal-access?   boolean
       +--rw holders!
