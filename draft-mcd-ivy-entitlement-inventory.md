@@ -97,7 +97,7 @@ Entitlements and features can be made available by means of  do not specify whic
 
 ## Capabilities
 
-Capabilities are modeled by augmenting newtwork-element in the ietf-network-inventory module in {{BaseInventory}} according to the following tree:
+Capabilities are modeled by augmenting "newtwork-element" in the "ietf-network-inventory" module in {{BaseInventory}} according to the following tree:
 
 ~~~
 +--rw capabilities
@@ -121,17 +121,86 @@ Capabilities are modeled by augmenting newtwork-element in the ietf-network-inve
                +--rw resource-name?              string
                +--rw units?                      string
                +--rw max-value?                  int32
+               +--rw current-value?              int32
 ~~~
 
-The list of capabilities for a given element MAY contain all the associated capabilities provided by the element vendor for such an element, and MUST contain all the capabilities the network service provider operating the network element has acquired and entitlement for, independently of it being active or not.
+The list of capabilities for a given element MAY contain all the associated capabilities provided by the element vendor for such an element, and MUST contain all the capabilities the network service provider operating the network element has acquired an entitlement for, independently of it being active or not.
 
 The capabilities of an inventoried asset may be restricted based on the availability of proper entitlements. An entitlement manager might be interested in the capabilities available to be use on the assets, and the capabilities that are available. The model includes this information by means of the "supporting-entitlements" list, that includes potential restrictions related to the status of the entitlement. This can help organizations stay informed about their entitlement usage and take necessary actions to prevent potential violations or overuse of capabilities.
 
 ## Entitlements
 
+As in the case of capabilities, entitlement modeling augments "newtwork-element" in the ietf-network-inventory module in {{BaseInventory}} according to the following tree:
+
+~~~
++--rw entitlements
+   +--rw entitlement* [eid]
+   +--rw eid                                  string
+   +--rw product-id?                          string
+   +--rw state?                               entitlement-state-t
+   +--rw renewal-profile
+   |  +--rw activation-date?                  yang:date-and-time
+   |  +--rw expiration-date?                  yang:date-and-time
+   +--rw restrictions
+   |  +--rw restriction* [restriction-id]
+   |  +--rw restriction-id                    string
+   |  +--rw description?                      string
+   |  +--rw units?                            string
+   |  +--rw max-value?                        int32
+   |  +--rw current-value?                    int32
+   +--rw parent-entitlement-uid?     -> ../../entitlement/uid
+   +--rw entitlement-attachment
+      +--rw universal-access?   boolean
+      +--rw holders!
+         |  +--rw organizations_names
+         |  |  +--rw organizations*           string
+         |  +--rw users_names
+         |     +--rw users*                   string
+         +--rw assets
+            +--rw elements
+               +--rw network-elements*        string
+               +--rw components
+                  +--rw component* [network-element component-id]
+                     +--rw network-element    string
+                     +--rw component-id       string
+~~~
+
+Entitlements and assets are linked in the model in two ways. Entitlemenets might be attached to assets, and assets include (or have installed) entitlements. The former way addresses the case of a license server, while the latter considers an entitlement directly associated with the network element. An entitlement that is not inclucded by any asset means that is not being used.
+
+Entitlements may be listed in multiple assets. For instance, a license server, functioning as an asset, might list an entitlement, while the network element entitled by that license might also list it. Proper identification of entitlements is imperative to ensure consistency across systems, enabling monitoring systems to recognize when multiple assets list the same entitlement. Furthermore, there are cases where an authorized asset might not be aware of the covering license. Consider the scenario of a site license, wherein any device under the site may utilize a feature without explicit knowledge of the covering license. In such cases, asset awareness relies on management controls or a service license capable of listing it.
+
+## Entitlement Attachment
+
+The "entitlement" container holds a container called "entitlement-attachement" which relates how the entitlement is operationally linked to holders or assets. Note that there is a difference between an entilement being attached to an asset and an entilement being installed in the asset. In the former, we mean that the license was issued only for one (or more) assets. Some licenses actually can be open but have a limited number of installation. Other licenses might be openly constraint to geography localtion. We are not deailing with these complex cases now, but the container can be expanded for this in the future.
+
+The model accommodates listing entitlements acquired by the organization but not yet applied or utilized by any actor/asset. For these pending entitlements, logistical constraints may arise in informing their existence, as there must be at least one element exporting the model that is aware of their existence.
+
+Some entitlements are inherently associated with a holder, such as organization or an user. For example, a software license might be directly attached to a user. Also, the use of a network device might come with a basic license provided solely to an organization. Some entitlements could be assigned to a more abstract description of holders, such as people under a juristiction a geographical area. The model contains basic information about this, but it can be extended in the future to be more descriptive.
+
+While attachment is optional, the model should be capable of expressing attachment in various scenarios. The model can be expanded to list to which assets an entitlement is aimed for, when this link is more vague, such as a site license (e.g., assets located in a specific site), or more open licenses (e.g., free software for all users subscribed to a streaming platform).
+
+It is important to note that the current model does not provide information on whether an entitlement can be reassigned to other devices (e.g., fixed or floating license). Such scenarios fall under the "what if" category, which is not covered by this model.
+
+## Model Definition
+
+TBP
 
 
+# Use cases
 
+This section will describe use cases, an example of how they could be modelled by the model, and show how each of the questions that we have explored in this draft can be answered by the model.
+
+(TBP in next versions)
+
+
+# IANA Considerations
+
+(TBP)
+
+
+# Security Considerations
+
+(TBP)
 
 
 --- back
@@ -139,4 +208,4 @@ The capabilities of an inventoried asset may be restricted based on the availabi
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+This document is based on work partially funded by the the EU Horizon Europe projects ACROSS (grant 101097122), ROBUST-6G (grant 101139068), iTrust6G (grant 101139198), MARE (grant 101191436), and CYBERNEMO (grant 101168182).
