@@ -215,7 +215,7 @@ Future revisions may refactor the model to more accurately reflect configuration
 
 
 
-# Use cases and Examplease
+# Use cases and Examples
 
 This section describes use cases, provide an example of how they could be modeled by the model, and show how each of the questions that we have explored in this draft can be answered by the model.
 
