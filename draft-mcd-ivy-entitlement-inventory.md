@@ -222,8 +222,8 @@ This section describes use cases, provide an example of how they could be modele
 ## MPLS Capability License on a Network OS
 An operator installs a software license (entitlement) enabling MPLS routing on a NOS. The license is attached to a specific device and activates the "mpls-routing" capability class.
 
-
-```json
+~~~
+json
 "entitlement": {
   "eid": "mpls-license-001",
   "product-id": "mpls-software-lic-v2",
@@ -258,13 +258,14 @@ An operator installs a software license (entitlement) enabling MPLS routing on a
     ]
   }
 }
-```
+~~~
 
 ## Bandwidth Upgrade via License
 
 A Nokia device uses a capacity license to expand throughput.
 
-```json
+~~~
+json
 "entitlement": {
   "eid": "nokia-bw-10g",
   "product-id": "nokia-bw-upgrade",
@@ -296,13 +297,14 @@ A Nokia device uses a capacity license to expand throughput.
     ]
   }
 }
-```
+~~~
 
 ## Floating License Managed by License Server
 
 A shared entitlement is held by a license server and consumed dynamically by multiple switches.
 
-```json
+~~~
+json
 "entitlement": {
   "eid": "shared-switch-license-1",
   "entitlement-attachment": {
@@ -319,7 +321,7 @@ A shared entitlement is held by a license server and consumed dynamically by mul
     }
   }
 }
-```
+~~~
 
 This entitlement may be tracked across devices using a `license-server` asset that records usage or seat count (future extension).
 
