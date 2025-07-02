@@ -77,6 +77,17 @@ With the aim of clarifying the model scope, here are some questions that our mod
 
 It is important to note that the model primarily addresses the utilization of capabilities, rather than access control. For instance, if a network device cannot be configured to use an arbitrary network protocol (e.g. MPLS) due to licensing restrictions, this implies that the organization owning the router (the holder in this scenario) is not permitted to utilize the MPLS feature. This distinction is separate from, for instance, the ability of a specific user to configure MPLS due to access control limitations.
 
+## Pre-Provisioned vs. Discovered Entitlements
+
+This model is not intended for automatic discovery of entitlements or capabilities through the network elements themselves. Instead, it assumes that entitlements and their associations are either:
+
+- Provisioned in a license server or asset database;
+- Installed on individual devices and reported through management interfaces; or
+- Manually configured as part of an inventory process.
+
+Future augmentations may explore capability discovery or telemetry-driven models, but they are out of scope for the current version.
+
+
 
 # Conventions and Definitions
 
@@ -169,6 +180,12 @@ Entitlements and assets are linked in the model in two ways. Entitlements might 
 
 Entitlements may be listed in multiple assets. For instance, a license server, functioning as an asset, might list an entitlement, while the network element entitled by that license might also list it. Proper identification of entitlements is imperative to ensure consistency across systems, enabling monitoring systems to recognize when multiple assets list the same entitlement. Furthermore, there are cases where an authorized asset might not be aware of the covering license. Consider the scenario of a site license, wherein any device under the site may utilize a feature without explicit knowledge of the covering license. In such cases, asset awareness relies on management controls or a service license capable of listing it.
 
+### Reverse Mapping from Entitlements to Capabilities
+
+While the model includes links from capabilities to supporting entitlements, some inventory operators may need to evaluate entitlements independently and identify the capabilities they enable.
+
+To support this, implementers may use the `product-id` or `capability-class` metadata along with external references or catalogs. A reverse mapping structure may be introduced in a future version of the model, once a reliable binding syntax for entitlement-to-capability is standardized.
+
 ## Entitlement Attachment
 
 The "entitlement" container holds a container called "entitlement-attachement" which relates how the entitlement is operationally linked to holders or assets. Note that there is a difference between an entilement being attached to an asset and an entilement being installed in the asset. In the former, we mean that the license was issued only for one (or more) assets. Some licenses actually can be open but have a limited number of installation. Other licenses might be openly constraint to geography location. We are not dealing with these complex cases now, but the container can be expanded for this in the future.
@@ -185,12 +202,126 @@ It is important to note that the current model does not provide information on w
 
 TBP
 
+## Read-Only vs. Read-Write Model Segmentation
 
-# Use cases
+Not all elements in the entitlement model are expected to be configurable. The current YANG tree uses `rw` extensively for structural convenience. However, in many real-world use cases, entitlement and capability data will be read-only from the device or management system perspective.
 
-This section will describe use cases, provide an example of how they could be modeled by the model, and show how each of the questions that we have explored in this draft can be answered by the model.
+Data can be classified as follows:
 
-(TBP in next versions)
+- **Read-only (ro)**: Installed entitlements, current-value/max-value, expiration timestamps, holder details.
+- **Read-write (rw)**: Static description of capabilities and manually registered licenses.
+
+Future revisions may refactor the model to more accurately reflect configuration vs. operational state using `config false` statements.
+
+
+
+# Use cases and Examples
+
+This section describes use cases, provide an example of how they could be modeled by the model, and show how each of the questions that we have explored in this draft can be answered by the model.
+
+## MPLS Capability License on a Network OS
+An operator installs a software license (entitlement) enabling MPLS routing on a NOS. The license is attached to a specific device and activates the "mpls-routing" capability class.
+
+
+```json
+"entitlement": {
+  "eid": "mpls-license-001",
+  "product-id": "mpls-software-lic-v2",
+  "renewal-profile": {
+    "activation-date": "2025-01-01T00:00:00Z",
+    "expiration-date": "2026-01-01T00:00:00Z"
+  },
+  "entitlement-attachment": {
+    "holders": {
+      "organizations_names": {
+        "organizations": ["ACME Corp"]
+      },
+      "assets": {
+        "elements": {
+          "network-elements": ["router-5"]
+        }
+      }
+    }
+  }
+}
+
+"capability": {
+  "capability-id": "mpls-routing",
+  "capability-class": "routing",
+  "supporting-entitlements": {
+    "entitlement": [
+      {
+        "entitlement-id": "mpls-license-001",
+        "allowed": true,
+        "in-use": true
+      }
+    ]
+  }
+}
+```
+
+## Bandwidth Upgrade via License
+
+A Nokia device uses a capacity license to expand throughput.
+
+```json
+"entitlement": {
+  "eid": "nokia-bw-10g",
+  "product-id": "nokia-bw-upgrade",
+  "restrictions": {
+    "restriction": [
+      {
+        "restriction-id": "cap",
+        "description": "Bandwidth cap",
+        "units": "Gbps",
+        "max-value": 10,
+        "current-value": 6
+      }
+    ]
+  }
+}
+
+"capability": {
+  "capability-id": "bw-capability",
+  "resource-description": "Licensed bandwidth",
+  "resource-units": "Gbps",
+  "resource-amount": 10,
+  "supporting-entitlements": {
+    "entitlement": [
+      {
+        "entitlement-id": "nokia-bw-10g",
+        "allowed": true,
+        "in-use": true
+      }
+    ]
+  }
+}
+```
+
+## Floating License Managed by License Server
+
+A shared entitlement is held by a license server and consumed dynamically by multiple switches.
+
+```json
+"entitlement": {
+  "eid": "shared-switch-license-1",
+  "entitlement-attachment": {
+    "universal-access": true,
+    "holders": {
+      "organizations_names": {
+        "organizations": ["NTT"]
+      }
+    },
+    "assets": {
+      "elements": {
+        "network-elements": ["switch-1", "switch-2", "switch-3"]
+      }
+    }
+  }
+}
+```
+
+This entitlement may be tracked across devices using a `license-server` asset that records usage or seat count (future extension).
 
 
 # IANA Considerations
