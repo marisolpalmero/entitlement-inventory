@@ -25,7 +25,7 @@ venue:
   latest: "https://dr2lopez.github.io/ivy-capability-entitlement/draft-mcd-ivy-entitlement-inventory.html"
 author:
   - name: Marisol Palmero
-    organization: 
+    organization: Independent
     email: "marisol.ietf@gmail.com"
   - name: Camilo Cardona
     organization: NTT
@@ -55,17 +55,17 @@ The primary intent of this draft is to support three key operational use cases i
 
 - Listing entitlements (e.g., licenses) available across the organization, their holders, and applicable scope.
 
-- Modeling the capabilities that entitlements permit or enable — representing what a device can do when properly licensed.
+- Modeling the capabilities that entitlements permit or enable, representing what a device can do when properly licensed.
 
 - Representing the actual use of capabilities, including any active restrictions or limits defined by the associated entitlements.
 
-Together, these use cases enable administrators to answer essential questions such as: What can this device do? What is it currently allowed to do? And what is it actively doing — within the bounds of licensing or entitlement constraints? This approach supports not only entitlement tracking but also intent-aware control of device behavior and resource exposure.
+Together, these use cases enable administrators to answer essential questions such as: What can this device do? What is it currently allowed to do? And what is it actively doing within the bounds of licensing or entitlement constraints? This approach supports not only entitlement tracking but also intent-aware control of device behavior and resource exposure.
 
-As network technology evolves toward modular, software-defined, and virtualized architectures, managing the rights to activate specific functions becomes increasingly complex. These rights—granted via entitlements or licenses—must be tracked, aggregated, and matched to assets to ensure that services can be delivered using available capabilities. This complexity calls for structured, machine-readable models that represent which capabilities are available, permitted, and in use.
+As network technology evolves toward modular, software-defined, and virtualized architectures, managing the rights to activate specific functions becomes increasingly complex. These rights granted via entitlements or licenses must be tracked, aggregated, and matched to assets to ensure that services can be delivered using available capabilities. This complexity calls for structured, machine-readable models that represent which capabilities are available, permitted, and in use.
 
 To address this, the model relies on two core concepts: capability and entitlement. A capability represents what a system or component can do; an entitlement grants permission to use one or more of those capabilities, possibly under constraints such as time, scope, or usage limits. Being able to represent and exchange this information across systems helps automate entitlement administration and simplify operational decisions.
 
-This draft provides a foundational YANG structure for representing these relationships in a standard, vendor-neutral way, complementing the network inventory module.
+This draft provides a foundational YANG structure for representing these relationships in a standard, vendor neutral way, complementing the network inventory module.
 
 ## Scope of the Entitlement Model
 
@@ -100,7 +100,7 @@ This model is not intended for automatic discovery of entitlements or capabiliti
 - Installed on individual devices and reported through management interfaces; or
 - Manually configured as part of an inventory process.
 
-Future augmentations may explore capability discovery or telemetry-driven models, but they are out of scope for the current version.
+Future augmentations may explore capability discovery or telemetry driven models, but they are out of scope for the current version.
 
 
 
@@ -108,7 +108,7 @@ Future augmentations may explore capability discovery or telemetry-driven models
 
 {::boilerplate bcp14-tagged}
 
-* TBU Open Issue for the IVY WG, to include :
+* TBU Open Issue for the IVY WG, to include:
 
 (Update Glossary for Network Inventory draft. We need at least formal definitions of "capability" and "entitlement")
 
@@ -119,13 +119,13 @@ Future augmentations may explore capability discovery or telemetry-driven models
 
 The model describes how to represent capabilities and the entitlements that enable them across inventoried assets. Capabilities describe what a device can do. Entitlements indicate whether those capabilities are allowed and under what conditions.
 
-In scenarios where entitlements are tied to network elements, the element itself can provide this information. Alternatively, providers may support something similar to a license server, which could house comprehensive information regarding an organization's entitlements. Just by listing capabilities and entitlements, and reading their basic information, a NETCONF/RESTCONF client will be able to retrieve basic inventory information of available capabilities and existing entitlements.
+In deployments where entitlements are directly associated with specific network elements, the devices themselves may expose entitlement information. Alternatively, some environments may rely on a centralized license server that maintains the entitlements of an organization. By querying the list of capabilities and entitlements, along with their associated metadata, a NETCONF or RESTCONF client can retrieve essential inventory details about what capabilities are available and which entitlements are currently in place.
 
 Note that the model uses lists based on classes on multiple parts to be able to extend functionality.
 
 (TBD: Provide examples of how this can be done in future releases of this document)
 
-Capabilities and entitlements may be listed without explicitly identifying the assets (network elements or components) they apply to. To support assignment, the network-inventory [I-D.draft-ietf-ivy-network-inventory-yang-03] model should be updated with two new containers referred as capabilities and entitlements. These containers hold information of the state of capabilities and entitlements in the asset(s).
+Capabilities and entitlements may be listed without explicitly identifying the assets (network elements or components) they apply to. To support assignment, the network inventory {{I-D.ietf-ivy-network-inventory-yang}} should be augmented with two new containers referred as capabilities and entitlements. These containers hold information of the state of capabilities and entitlements in the asset(s).
 
 ## Capabilities
 
@@ -158,7 +158,7 @@ Capabilities are modeled by augmenting "network-element" in the "ietf-network-in
 
 For any given element, the capabilities list MAY include all potential capabilities advertised by the vendor, and MUST include those for which the network operator holds a valid entitlement—whether active or not.
 
-The capabilities of an inventoried asset may be restricted based on the availability of proper entitlements. An entitlement manager might be interested in the capabilities available to be use on the assets, and the capabilities that are available. The model includes this information by means of the "supporting-entitlements" list, that includes potential restrictions related to the status of the entitlement. This allows organizations to monitor entitlement usage and avoid misconfigurations or exceeding permitted capability limits.
+The capabilities of an inventoried asset may be restricted based on the availability of proper entitlements. An entitlement manager might be interested in the capabilities available to be use on the assets, and the capabilities that are available. The model includes this information by means of the "supporting entitlements" list, that includes potential restrictions related to the status of the entitlement. This allows organizations to monitor entitlement usage and avoid misconfigurations or exceeding permitted capability limits.
 
 ## Entitlements
 
@@ -205,7 +205,7 @@ Entitlements may be listed in multiple assets. For instance, a license server, f
 
 While the model includes links from capabilities to supporting entitlements, some inventory operators may need to evaluate entitlements independently and identify the capabilities they enable.
 
-To support this, implementers may use the `product-id` or `capability-class` metadata along with external references or catalogs. A reverse mapping structure may be introduced in a future version of the model, once a reliable binding syntax for entitlement-to-capability is standardized.
+To support this, implementers may use the `product-id` or `capability-class` metadata along with external references or catalogs. A reverse mapping structure may be introduced in a future version of the model, once a reliable binding syntax for entitlement to capability is standardized.
 
 ## Entitlement Attachment
 
@@ -342,7 +342,7 @@ A shared entitlement is held by a license server and consumed dynamically by mul
 }
 ```
 
-This entitlement may be tracked across devices using a `license-server` asset that records usage or seat count (future extension).
+This entitlement may be tracked across devices using a `license server` asset that records usage or seat count (future extension).
 
 
 # IANA Considerations
