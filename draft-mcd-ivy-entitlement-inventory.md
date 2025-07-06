@@ -125,7 +125,7 @@ Note that the model uses lists based on classes on multiple parts to be able to 
 
 (TBD: Provide examples of how this can be done in future releases of this document)
 
-Capabilities and entitlements may be listed without explicitly identifying the assets (network elements or components) they apply to. To support assignment, the network inventory {{I-D.ietf-ivy-network-inventory-yang}} should be augmented with two new containers referred as capabilities and entitlements. These containers hold information of the state of capabilities and entitlements in the asset(s).
+Capabilities and entitlements may be listed without explicitly identifying the assets (network elements or components) they apply to. To support assignment, the network inventory {{I-D.draft-ietf-ivy-network-inventory-yang}} should be augmented with two new containers referred as capabilities and entitlements. These containers hold information of the state of capabilities and entitlements in the asset(s).
 
 ## Capabilities
 
