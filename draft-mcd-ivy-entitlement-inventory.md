@@ -143,7 +143,7 @@ Capabilities are modeled by augmenting "network-element" in the "ietf-network-in
          +--ro resource-amount?                  int32
          +--ro supporting-entitlements
             +--ro entitlement* [entitlement-id]
-            +--ro entitlement-id                 -> ../../../../../entitlements/entitlment/entitlement-id
+            +--ro entitlement-id                 -> ../../../../../entitlements/entitlement/entitlement-id
             +--ro allowed?                       boolean
             +--ro in-use?                        boolean
             +--ro capability-restriction* [capability-restriction-id]
@@ -217,7 +217,7 @@ Some entitlements are inherently associated with a holder, such as organization 
 
 While attachment is optional, the model should be capable of expressing attachment in various scenarios. The model can be expanded to list to which assets an entitlement is aimed for, when this link is more vague, such as a site license (e.g., assets located in a specific site), or more open licenses (e.g., free software for all users subscribed to a streaming platform).
 
-It is important to note that the current model does not provide information on whether an entitlement can be reassigned to other devices (e.g., fixed or floating license). Such scenarios fall under the "what if" category, which is not covered by this model.
+It is important to note that the current model does not provide information on whether an entitlement can be reassigned to other devices. Such scenarios fall under the "what if" category, which is not covered by this model.
 
 ## Model Definition
 
