@@ -184,7 +184,7 @@ Figure 1 depicts the relationship between the Entitlement Inventory model and ot
    |  restrictions        |
    +----------------------+
 
-      Figure 1: Relationship of Entitlement Inventory Model to Other 
+      Figure 1: Relationship of Entitlement Inventory Model to Other
                               Inventory Models
 ~~~
 +--ro entitlements
