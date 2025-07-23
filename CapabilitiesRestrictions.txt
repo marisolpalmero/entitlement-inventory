@@ -6,12 +6,12 @@
        │                   │                     │      
        │                   │                     │      
 ┌──────┴─────┐     ┌───────┴───────┐      ┌──────┴─────┐
-│  Hardware  │     │    Software   │      │Entitlements│
+│  Hardware  │     │  Entitlements │      │   Software │
 └──────┬─────┘     └───────┬───────┘      └──────┬─────┘
        │                   │                     │      
        │                   │                     │      
-       │                   │supports             │      
-       │supports    ┌──────V─────────┐   entitles│      
+       │                   │enables              │      
+       │supports    ┌──────V─────────┐   supports│      
        └───────────>│  Capabilities  │<──────────┘      
                     └──────┬─────────┘                  
                            │              
