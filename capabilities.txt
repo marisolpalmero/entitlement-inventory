@@ -12,7 +12,7 @@
        │                   │                     │      
        │                   │                     │      
        │                   │                     │      
-       │                   │                     │      
-       │supports     ┌─────┴──────────┐  entitles│      
+       │                   │supports             │      
+       │supports     ┌─────V──────────┐  entitles│      
        └────────────>│  Capabilities  │<─────────┘      
                      └────────────────┘                 
