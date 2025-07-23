@@ -187,6 +187,8 @@ Figure 1 depicts the relationship between the Entitlement Inventory model and ot
       Figure 1: Relationship of Entitlement Inventory Model to Other
                               Inventory Models
 ~~~
+
+~~~
 +--ro entitlements
    +--ro entitlement* [eid]
    +--ro eid                                  string
