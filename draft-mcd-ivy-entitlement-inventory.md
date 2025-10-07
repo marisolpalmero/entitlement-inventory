@@ -34,8 +34,10 @@ author:
     organization: Telefonica
     email: "diego.r.lopez@telefonica.com"
 
+normative:
+
 informative:
-  BaseInventory: I-D.ietf-ivy-network-inventory-yang-08
+  BaseInventory: I-D.ietf-ivy-network-inventory-yang
 
 --- abstract
 
@@ -106,7 +108,7 @@ Future augmentations may explore capability discovery or telemetry driven models
 
 * ToBeUpdated(TBU) Open Issue for the IVY WG, to include:
 
-<<Update Glossary under  Network Inventory draft, {{!I.D.draft-ietf-ivy-network-inventory-yang}}. We need at least formal definitions of "capability" and "entitlement".>>
+<<Update Glossary under  Network Inventory draft, {{BaseInventory}}. We need at least formal definitions of "capability" and "entitlement".>>
 
 - Capability: A function or resource that a network element can support or execute.
 - Entitlement: A right granted to a holder (organization or user) to access or activate specific capabilities under defined conditions.
