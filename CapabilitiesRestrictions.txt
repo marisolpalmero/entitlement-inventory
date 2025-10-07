@@ -6,16 +6,16 @@
        │                   │                     │      
        │                   │                     │      
 ┌──────┴─────┐     ┌───────┴───────┐      ┌──────┴─────┐
-│  Hardware  │     │  Entitlements │      │   Software │
+│  Hardware  │     │    Software   │      │Entitlements│
 └──────┬─────┘     └───────┬───────┘      └──────┬─────┘
        │                   │                     │      
        │                   │                     │      
-       │                   │enables              │      
-       │supports    ┌──────V─────────┐   supports│      
+       │                   │                     │      
+       │supports    ┌──────┴─────────┐   entitles│      
        └───────────>│  Capabilities  │<──────────┘      
                     └──────┬─────────┘                  
-                           │              
-                           │constrained by                            
-                    ┌──────V─────────┐                  
+                           │ constrained by             
+                           │                            
+                    ┌──────┴─────────┐                  
                     │  Restrictions  │                  
                     └────────────────┘                  

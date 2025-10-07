@@ -1,7 +1,7 @@
 ---
 title: "A YANG Module for Entitlement Inventory"
-abbrev: "almo-entitlement-inventory"
-category: info
+abbrev: "entitlement-inventory"
+category: std
 docname: draft-mcd-ivy-entitlement-inventory-latest
 submissiontype: IETF
 number:
@@ -35,27 +35,25 @@ author:
     email: "diego.r.lopez@telefonica.com"
 
 normative:
-  RFC2119:
-  RFC8174:
 
 informative:
   BaseInventory: I-D.ietf-ivy-network-inventory-yang
 
 --- abstract
 
-This document proposes a YANG module for incorporating entitlements in a network inventory. Entitlements define the rights for their holder to use specific capabilities in a network element(s). The model is rooted by the concept of the capabilities offered by a network element, enabled by the held entitlements, and considers entitlement scope, how they are assigned, and when they expire. The model introduces a descriptive definition of capabilities and the entitlement use restrictions, supporting entitlement administration and the understanding of the capabilities available through the network.
+This document proposes a YANG module for incorporating entitlements in a network inventory, encompassing both virtual and physical network elements. Entitlements define the rights for their holder to use specific capabilities in a network element(s). The model is rooted by the concept of the capabilities offered by an element, enabled by the held entitlements, and considers entitlement scope, how they are assigned, and when they expire. The model introduces a descriptive definition of capabilities and the entitlement use restrictions, supporting entitlement administration and the understanding of the capabilities available through the network.
 
 --- middle
 
 # Introduction
 
-The goal of any network elements included as assets in the inventory of any network service provider or enterprise is to leverage their capabilities to build network services. Many of these capabilities are not automatically enabled upon acquisition; their use may require specific rights—typically provided via entitlements or licenses from the vendor.
+The purpose of any network elements included as assets in the inventory of any network operator is to leverage their capabilities to build network services. Many of these capabilities are not automatically enabled upon acquisition; their use may require specific rights—typically provided via entitlements or licenses from the vendor.
 
 The primary intent of this draft is to support three key operational use cases in managing software entitlements and network capabilities:
 
-- Listing entitlements (e.g., licenses) available across the organization, their holders, and applicable scope.
+- Listing entitlements (e.g., licenses) available across the operator organization, their holders, and applicable scope.
 
-- Modeling the capabilities that entitlements permit or enable, representing what a device can do when properly licensed.
+- Modeling the capabilities that entitlements permit or enable, representing what a network element may do when properly licensed.
 
 - Representing the actual use of capabilities, including any active restrictions or limits defined by the associated entitlements.
 
@@ -63,9 +61,9 @@ Together, these use cases enable administrators to answer essential questions su
 
 As network technology evolves toward modular, software-defined, and virtualized architectures, managing the rights to activate specific functions becomes increasingly complex. These rights granted via entitlements or licenses must be tracked, aggregated, and matched to assets to ensure that services can be delivered using available capabilities. This complexity calls for structured, machine-readable models that represent which capabilities are available, permitted, and in use.
 
-To address this, the model relies on two core concepts: capability and entitlement. A capability represents what a system or component can do; an entitlement grants permission to use one or more of those capabilities, possibly under constraints such as time, scope, or usage limits. Being able to represent and exchange this information across systems helps automate entitlement administration and simplify operational decisions.
+To address this, the model relies on two core concepts: capability and entitlement. A capability represents what a system or component may do; an entitlement grants permission to use one or more of those capabilities, possibly under constraints such as time, scope, or usage limits. Being able to represent and exchange this information across systems helps automate entitlement administration and simplify operational decisions.
 
-This draft provides a foundational YANG structure for representing these relationships in a standard, vendor neutral way, complementing the network inventory module.
+This draft provides a foundational YANG structure for representing these relationships as standards, complementing the network inventory module.
 
 ## Scope of the Entitlement Model
 
@@ -85,9 +83,9 @@ The realm of entitlements and licensing is inherently complex, presenting challe
 With the aim of clarifying the model scope, here are some questions that our model does not attempt to answer:
 
 * What are the implications of purchasing a specific entitlement?
-* Which entitlement should I acquire to get a specific capability?
+* Which entitlement is needed to obtain a specific capability?
 * Is license migration feasible?
-* What capabilities will be allowed if I install an entitlement in a specific device?
+* What capabilities are permitted when an entitlement is installed in a specific device?
 * Features or restrictions that depend on each user. We are not covering this in the current version of this document, but it could be done if we expand the holders' identification.
 
 This model focuses on the ability to use capabilities, not on access control mechanisms. For example, if a router cannot enable MPLS due to entitlement restrictions, it means the organization lacks the rights to use that capability—even if access to the device itself is available. This distinction is separate from, for instance, the ability of a specific user to configure MPLS due to access control limitations.
@@ -108,9 +106,9 @@ Future augmentations may explore capability discovery or telemetry driven models
 
 {::boilerplate bcp14-tagged}
 
-* TBU Open Issue for the IVY WG, to include:
+* ToBeUpdated(TBU) Open Issue for the IVY WG, to include:
 
-(Update Glossary for Network Inventory draft. We need at least formal definitions of "capability" and "entitlement")
+<<Update Glossary under  Network Inventory draft, {{BaseInventory}}. We need at least formal definitions of "capability" and "entitlement".>>
 
 - Capability: A function or resource that a network element can support or execute.
 - Entitlement: A right granted to a holder (organization or user) to access or activate specific capabilities under defined conditions.
@@ -145,7 +143,7 @@ Capabilities are modeled by augmenting "network-element" in the "ietf-network-in
          +--ro resource-amount?                  int32
          +--ro supporting-entitlements
             +--ro entitlement* [entitlement-id]
-            +--ro entitlement-id                 -> ../../../installed-entitlements/entitlement/eid
+            +--ro entitlement-id                 -> ../../../../../entitlements/entitlement/entitlement-id
             +--ro allowed?                       boolean
             +--ro in-use?                        boolean
             +--ro capability-restriction* [capability-restriction-id]
@@ -196,6 +194,7 @@ Figure 1 depicts the relationship between the Entitlement Inventory model and ot
    +--ro state?                               entitlement-state-t
    +--ro renewal-profile
    |  +--ro activation-date?                  yang:date-and-time
+   |  +--ro start-date?                       yang:date-and-time
    |  +--ro expiration-date?                  yang:date-and-time
    +--ro restrictions
    |  +--ro restriction* [restriction-id]
@@ -256,6 +255,7 @@ Since capabilities are optional in network elements, the model also provides an 
 The installed entitlements represent references to entitlements that are locally present on the network element. The "eid" field provides a direct reference to the centralized entitlement at the network-inventory level.
 
 This structure allows network elements to operate independently of centralized entitlement management while maintaining the ability to track relationships to organization-wide entitlement policies.
+
 
 ## Model Definition
 
