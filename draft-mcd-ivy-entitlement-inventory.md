@@ -35,7 +35,6 @@ author:
     email: "diego.r.lopez@telefonica.com"
 
 normative:
-  RFC8174:
 
 informative:
   BaseInventory: I-D.ietf-ivy-network-inventory-yang
