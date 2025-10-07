@@ -35,7 +35,6 @@ author:
     email: "diego.r.lopez@telefonica.com"
 
 normative:
-  RFC2119:
   RFC8174:
 
 informative:
