@@ -34,8 +34,6 @@ author:
     organization: Telefonica
     email: "diego.r.lopez@telefonica.com"
 
-normative:
-
 informative:
   BaseInventory: I-D.ietf-ivy-network-inventory-yang
 
