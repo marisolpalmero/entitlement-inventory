@@ -35,7 +35,7 @@ author:
     email: "diego.r.lopez@telefonica.com"
 
 informative:
-  BaseInventory: I-D.ietf-ivy-network-inventory-yang
+  BaseInventory: I-D.ietf-ivy-network-inventory-yang-08
 
 --- abstract
 
