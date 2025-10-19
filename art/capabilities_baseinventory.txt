@@ -7,7 +7,6 @@
   │  Hardware  │    │  Entitlements │     │   Software │
   └────┬───────┘    └─────┬─────────┘     └─────┬──────┘
        │                  │                     │      
-       │                  │                     │      
        │                  │enables              │      
        │supports   ┌──────V─────────┐   supports│      
        └──────────>│  Capabilities  │<──────────┘      
